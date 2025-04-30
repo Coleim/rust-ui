@@ -13,7 +13,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: jetli/trunk-action@v0.5.0
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Use Trunk
+      uses: jetli/trunk-action@v0.5.0
     - name: Build
       run: cd yew-app && trunk build --release true
   deploy:
