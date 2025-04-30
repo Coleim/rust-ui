@@ -23,7 +23,9 @@ jobs:
     - name: Build
       working-directory: yew-app
       run: trunk build --release true
+    - name: test 
+      run: ls -al && ls -al yew-app/dist/
     - name: Upload GitHub Pages artifact
       uses: actions/upload-pages-artifact@v3.0.1
       with:
-        path: yew-app/dist/
+        path: yew-app/dist/*
