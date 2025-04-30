@@ -15,10 +15,14 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Use Trunk
+    - name: Install Trunk
       uses: jetli/trunk-action@v0.5.0
+    - name: Install wasm
+      working-directory: yew-app
+      run: rustup target add wasm32-unknown-unknown
     - name: Build
-      run: cd yew-app && trunk build --release true
+      working-directory: yew-app
+      run: trunk build --release true
   deploy:
     needs: build
     runs-on: ubuntu-latest
