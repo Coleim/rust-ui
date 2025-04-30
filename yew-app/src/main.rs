@@ -1,24 +1,37 @@
+pub mod addtaskbar;
+
 use yew::prelude::*;
+use addtaskbar::AddTaskBar;
+
 
 #[function_component]
 fn App() -> Html {
-    let counter = use_state(|| 0);
-    let onclick = {
-        let counter = counter.clone();
-        move |_| {
-            let value = *counter + 1;
-            counter.set(value);
-        }
+    let tasks = use_state(|| vec![]);
+    let on_task_add = {
+        let tasks = tasks.clone();
+        Callback::from(move|task: String| {
+            log::info!("Task added: {}", task);
+            tasks.set({
+                let mut new_tasks = (*tasks).clone();
+                new_tasks.push(task);
+                new_tasks
+            });
+        })
     };
-
     html! {
         <div>
-            <button {onclick}>{ "+1" }</button>
-            <p>{ *counter }</p>
+            <h1 class={classes!("main-title")}>{ "Todo Yew" }</h1>
+            <div class={classes!("main-container")}>
+                <AddTaskBar on_add_task={on_task_add}/>
+                <ul>
+                    { for (*tasks).iter().map(|task| html! { <li>{ task }</li> }) }
+                </ul>
+            </div>
         </div>
     }
 }
 
 fn main() {
+    wasm_logger::init(wasm_logger::Config::default());
     yew::Renderer::<App>::new().render();
 }
