@@ -1,8 +1,9 @@
 pub mod addtaskbar;
+pub mod tasklist;
 
 use yew::prelude::*;
 use addtaskbar::AddTaskBar;
-
+use tasklist::TaskList;
 
 #[function_component]
 fn App() -> Html {
@@ -23,10 +24,8 @@ fn App() -> Html {
             <h1 class={classes!("main-title")}>{ "Todo Yew" }</h1>
             <div class={classes!("main-container")}>
                 <AddTaskBar on_add_task={on_task_add}/>
-                <ul>
-                    { for (*tasks).iter().map(|task| html! { <li>{ task }</li> }) }
-                </ul>
-            </div>
+                <TaskList tasks={(*tasks).clone()}/>
+           </div>
         </div>
     }
 }

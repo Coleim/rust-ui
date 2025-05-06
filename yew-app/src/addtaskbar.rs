@@ -48,7 +48,7 @@ pub fn AddTaskBar(props: &AddTaskBarProps) -> Html {
     };
 
     html! {
-        <div>
+        <div class={classes!("add-task-bar")}>
             <input
                 ref={input_ref.clone()}
                 class={classes!("add-input")}
